@@ -1,0 +1,61 @@
+{
+  "$schema": "http://iglucentral.com/schemas/com.snowplowanalytics.self-desc/schema/jsonschema/1-0-0#",
+    "description": "Schema for information about the shredded data, for loader to read",
+    "self": {
+      "vendor": "com.snowplowanalytics.snowplow.storage.rdbshredder",
+      "name": "output",
+      "format": "jsonschema",
+      "version": "1-0-0"
+    },
+    "type": "object",
+    "properties": {
+      "shreddedTypes": {
+        "description": "List of shredded types",
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Information about one shredded type",
+          "properties" : {
+            "schemaKey": {
+              "description": "Schema of the shredded type",
+              "type": "object",
+              "properties" : {
+						    "vendor": {
+						    	"type": "string",
+						    	"pattern": "^[a-zA-Z0-9-_.]+$"
+						    },
+						    "name": {
+						    	"type": "string",
+						    	"pattern": "^[a-zA-Z0-9-_]+$"
+						    },
+						    "format": {
+						    	"type": "string",
+						    	"pattern": "^[a-zA-Z0-9-_]+$"
+						    },
+						    "version": {
+						    	"type": "string",
+						    	"pattern": "^[0-9]+-[0-9]+-[0-9]+$"
+						    }
+              },
+              "required": ["vendor", "name", "format", "version"],
+              "additionalProperties": false
+            },
+            "s3Path" : {
+              "description": "S3 path containing data with this shredded type",
+              "type": "string",
+              "minLength": 7
+            },
+            "format" : {
+              "description": "Format of shredded data: Tsv or Json",
+              "enum": ["Tsv", "Json"]
+            }
+          },
+          "required": ["schemaKey", "s3Path", "format"],
+          "additionalProperties": false
+        },
+        "minItems": 1
+      }
+    },
+    "required": ["shreddedTypes"],
+    "additionalProperties": false
+}
