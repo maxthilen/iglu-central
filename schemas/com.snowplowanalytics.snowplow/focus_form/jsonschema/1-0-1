@@ -1,0 +1,45 @@
+{
+	"$schema": "http://iglucentral.com/schemas/com.snowplowanalytics.self-desc/schema/jsonschema/1-0-0#",
+	"description": "Schema for the focus of a form field",
+	"self": {
+		"vendor": "com.snowplowanalytics.snowplow",
+		"name": "focus_form",
+		"format": "jsonschema",
+		"version": "1-0-1"
+	},
+
+	"type": "object",
+	"properties": {
+		"formId": {
+			"description": "The id of the form the element belongs to",
+			"type": "string"
+		},
+		"elementId": {
+			"description": "The id of the element that has just received focus",
+			"type": "string"
+		},
+		"nodeName": {
+			"description": "The node type of the element",
+			"type": "string",
+			"enum": ["INPUT", "TEXTAREA", "SELECT"]
+		},
+		"elementType": {
+			"description": "The type of input element",
+			"type": ["string", "null"],
+			"enum": ["button", "checkbox", "color", "date", "datetime", "datetime-local", "email", "file", "hidden", "image", "month", "number", "password", "radio", "range", "reset", "search", "submit", "tel", "text", "time", "url", "week"]
+		},
+		"elementClasses": {
+			"description": "An array of the classes on the element",
+			"type": ["array", "null"],
+			"items": {
+				"type": "string"
+			}
+		},
+		"value": {
+			"description": "The value of the element when it gained focus",
+			"type": ["string", "null"]
+		}
+	},
+	"required": ["formId", "elementId", "nodeName", "value"],
+	"additionalProperties": false
+}
